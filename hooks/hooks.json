@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/skills/advice-debugger/scripts/ledger.py\" due --hook 2>/dev/null || python \"${CLAUDE_PLUGIN_ROOT}/skills/advice-debugger/scripts/ledger.py\" due --hook 2>/dev/null || true",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

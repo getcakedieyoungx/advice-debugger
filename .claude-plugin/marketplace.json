@@ -1,0 +1,16 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+  "name": "advice-debugger",
+  "description": "A feedback loop for AI advice: log it, test it, learn from what actually happened.",
+  "owner": {
+    "name": "getcakedieyoungx"
+  },
+  "plugins": [
+    {
+      "name": "advice-debugger",
+      "description": "Track whether your AI's advice actually worked, and fix the assumption that broke.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}

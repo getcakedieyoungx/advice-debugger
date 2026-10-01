@@ -1,0 +1,13 @@
+{
+  "name": "advice-debugger",
+  "version": "0.1.0",
+  "description": "Your AI gives advice but never learns whether it worked. advice-debugger logs each piece of actionable advice as a hypothesis, checks back on the outcome, and fixes the assumption that broke instead of repeating itself.",
+  "author": {
+    "name": "getcakedieyoungx",
+    "url": "https://github.com/getcakedieyoungx"
+  },
+  "homepage": "https://github.com/getcakedieyoungx/advice-debugger",
+  "repository": "https://github.com/getcakedieyoungx/advice-debugger",
+  "license": "MIT",
+  "keywords": ["advice", "feedback-loop", "experiments", "habits", "productivity", "skills"]
+}

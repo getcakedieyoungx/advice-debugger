@@ -1,0 +1,39 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ledger:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.9", "3.13"]
+        exclude:
+          - os: macos-latest
+            python: "3.9"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m unittest discover -s tests -v
+
+  plugin-loads:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+      - name: Validate and install the plugin into a scratch config
+        run: |
+          export CLAUDE_CONFIG_DIR="$RUNNER_TEMP/claude-scratch"
+          mkdir -p "$CLAUDE_CONFIG_DIR"
+          claude plugin validate .
+          claude plugin marketplace add "$GITHUB_WORKSPACE"
+          claude plugin install advice-debugger@advice-debugger
+          claude plugin list | tee plugin-list.txt
+          grep -q "enabled" plugin-list.txt
