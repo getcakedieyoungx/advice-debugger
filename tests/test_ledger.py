@@ -91,6 +91,16 @@ class LedgerTest(unittest.TestCase):
         self.run_cmd("add", payload=json.loads(blocks[0]))
         self.run_cmd("result", "1", payload=json.loads(blocks[1]))
 
+    def test_readme_json_examples_parse(self):
+        """Every ```json block in the READMEs (incl. translations) must stay valid JSON."""
+        files = [ROOT / "README.md", *sorted((ROOT / ".github" / "readme").glob("README.*.md"))]
+        for f in files:
+            for block in f.read_text(encoding="utf-8").split("```json\n")[1:]:
+                with self.subTest(file=f.name):
+                    data = json.loads(block.split("```", 1)[0])
+                    if "status" in data:
+                        self.assertIn(data["status"], ("worked", "partial", "failed", "abandoned", "inconclusive"))
+
     # --- hook ---
 
     def test_hook_silent_without_ledger(self):

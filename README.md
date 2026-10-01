@@ -8,10 +8,17 @@
   <a href="LICENSE"><img src="https://img.shields.io/github/license/getcakedieyoungx/advice-debugger?style=flat" alt="License"></a>
   <a href="https://github.com/getcakedieyoungx/advice-debugger/actions/workflows/tests.yml"><img src="https://github.com/getcakedieyoungx/advice-debugger/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
   <img src="https://img.shields.io/badge/dependencies-0-brightgreen?style=flat" alt="Zero dependencies">
+  <a href="https://www.patreon.com/monkeytax407"><img src="https://img.shields.io/badge/Patreon-support-F96854?style=flat&logo=patreon&logoColor=white" alt="Support on Patreon"></a>
 </p>
 
 <p align="center">
-  <strong>🇬🇧</strong> · <a href=".github/readme/README.tr.md" title="Türkçe">🇹🇷</a>
+  <strong title="English">🇬🇧</strong> ·
+  <a href=".github/readme/README.tr.md" title="Türkçe">🇹🇷</a> ·
+  <a href=".github/readme/README.es.md" title="Español">🇪🇸</a> ·
+  <a href=".github/readme/README.pt-BR.md" title="Português (Brasil)">🇧🇷</a> ·
+  <a href=".github/readme/README.de.md" title="Deutsch">🇩🇪</a> ·
+  <a href=".github/readme/README.zh-CN.md" title="简体中文">🇨🇳</a> ·
+  <a href=".github/readme/README.ja.md" title="日本語">🇯🇵</a>
 </p>
 
 ## Install
@@ -39,11 +46,13 @@ Advice has nothing. Your assistant tells you to "post every day" or "cold-email 
 
 ## What changes
 
+### A habit
+
 <table>
 <tr>
 <td width="50%">
 
-### Before
+**Before**
 
 > **You:** I tried posting every day like you said. Did 3 days, then quit. Writing was easy, but deciding what to write about every single day wore me out.
 >
@@ -52,7 +61,7 @@ Advice has nothing. Your assistant tells you to "post every day" or "cold-email 
 </td>
 <td width="50%">
 
-### After
+**After**
 
 > **AI:** Logging #1's result. We assumed the bottleneck was *writing*. It turned out to be the *daily topic decision*. That assumption broke, so a reminder won't fix it.
 >
@@ -63,6 +72,54 @@ Advice has nothing. Your assistant tells you to "post every day" or "cold-email 
 </td>
 </tr>
 </table>
+
+### A codebase
+
+<table>
+<tr>
+<td width="50%">
+
+**Before**
+
+> **You:** Two weeks ago you told me to split `shared/` into small packages. Now almost every PR touches four of them.
+>
+> **AI:** That's normal while a modular architecture settles in! Add Turborepo for caching, enforce boundaries with ESLint, and give it a few more weeks. It'll pay off. 🚀
+
+</td>
+<td width="50%">
+
+**After**
+
+> **AI:** Checked #5 against the last 14 PRs in `git log` instead of guessing:
+>
+> ```diff
+>   expected   ≤ 2 packages touched per PR
+> - actual     4 per PR, pricing + checkout changed together in 11/14
+> ```
+>
+> **A1 broke:** "pricing and checkout change independently". Merge those two back into one package and keep the other splits.
+>
+> **Signal:** ≤ 2 packages per PR over the next 10 PRs. Logged as #6 (revises #5).
+
+</td>
+</tr>
+</table>
+
+What lands in the ledger for #5:
+
+```json
+{
+  "status": "failed",
+  "actual": "Median PR touched 4 packages; pricing and checkout changed together in 11 of 14 PRs.",
+  "gap": "expected <= 2 packages per PR, got 4",
+  "verdicts": {
+    "A1": { "verdict": "broke", "note": "pricing and checkout are one unit of change" },
+    "A2": "held"
+  },
+  "lesson": "Splitting modules that change together multiplied the packages touched per PR.",
+  "source": "git log, last 14 PRs"
+}
+```
 
 ## How it works
 
@@ -108,6 +165,10 @@ $ python ledger.py lessons --domain content
 ## Tune it
 
 Fork it, edit [`skills/advice-debugger/SKILL.md`](skills/advice-debugger/SKILL.md), and install your fork. Run the tests with `python -m unittest discover -s tests`.
+
+## Support
+
+advice-debugger is free and MIT-licensed. If it saved you from one more round of recycled advice, you can support more tools like it on [Patreon](https://www.patreon.com/monkeytax407).
 
 ## License
 
